@@ -575,7 +575,14 @@ Luckily for us, R has a feature for using a value without transferring ownership
 
 https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
 
-The issue with the tuple code
+The issue with the tuple code is that we have to return the `String` to the calling function so we can still use the `String` after the call to `calculate_length`, because the `String` was moved into `calculate_length`.
+
+Instead, we can provide a reference to the `String` value.
+
+A reference is like a pointer in that it's an address we can follow to access the data stored at that address; that data is owned by some other variable.
+
+Unlike a pointer, a reference is guaranteed to point to a valid value of a particular type for the life of that reference.
+
 
 ```
 fn main(){
@@ -589,3 +596,37 @@ fn calculate_length(s: &String) -> usize{
   s.leng()
 }
 ```
+
+First, notice that all the tuple code in the variable declaration and the function return value is gone.
+
+Second, note that we pass `&s1` into `calculate_length` and, in its definition, we take `&String` rather than `String`.
+
+These ampersands `&` represents *reference*, and they allow you to refere to some value without taking ownership of it.
+
+Let's take a closer look at the function call here:
+
+```
+let s1 = String::from("hello");
+let len = calculate_length(&s1);
+```
+
+The `&s1` syntax lets us create a reference that *refers* to the value of `s1`, but does not own it.
+
+Because it does not own it, the value it points to will not be dropped when the reference stops beign used.
+
+Likewise, the signature of the function uses `&` to indicate that the type of the parameter `s` is a reference.
+
+```
+// s is a reference to a String
+fn calculate_length(s: &String) -> usize {
+    s.len()
+}
+// Here s goes out of scope. But because it does not have ownership of what
+// it referes to, it is not dropped.
+```
+
+When functions have references as parameters instead of the actual values, we won't need to return values in order to give back ownership, because we never had ownership.
+
+Just as variables are immutable by default, so are references. We're not allowed to modify something we have reference to.
+
+## Mutable Refernces
