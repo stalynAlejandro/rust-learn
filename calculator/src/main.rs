@@ -43,7 +43,8 @@ fn add(n: u32, m:u32) -> u32 {
 
 fn substract(n: u32, m:u32) -> u32 {
     // Todo: check if n > m
-    n - m
+    if n < m { 0 }
+    else { n - m }
 }
 
 fn multiply(n: u32, m:u32) -> u32 {
@@ -52,5 +53,6 @@ fn multiply(n: u32, m:u32) -> u32 {
 
 fn divide(n: u32, m:u32) -> u32{
     // Todo: check if m != 0
-    n / m
+    if m <= 0 { 0 }
+    else { n / m }
 }
