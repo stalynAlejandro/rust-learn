@@ -711,3 +711,32 @@ println!("{r1} and {r2}");              // Usage of ref r1 and r2
 let r3 = &mut s;                        // Create Mutable ref to s
 println!("{r3}");                       // Usage of ref 3
 ```
+
+## Dangling Refernces
+
+*Dangling Pointer*: a pointer that references a location in memory that may have been given to someone else.
+
+In R the compiler guarantees that references will never be dangling references:
+if you have a reference to some data, the compiler will ensure that the data will not go out of scope before the refenrence to the data does.
+
+```
+// creating a dangling reference
+fn main(){
+    let reference_to_nothing = dangle();
+}
+
+fn dangle() -> &String{
+    let s = String::from("hello");
+    &s
+}
+
+// Error: this function's return type contains a borrowed value, for it to be
+// borrowed from
+```
+Because `s` is created inside `dangle`, when the code of `dangle` is finished,
+`s` will be deallocated. But we tried to return a reference to it. That means
+this reference would be pointing to an invalid `String`. R won't let us do this.
+
+**The Rules of References**
+-   At any given time, you can have either one mutable reference or any number of immutable references.
+-   References must always be valid.
