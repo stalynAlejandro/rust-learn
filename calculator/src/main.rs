@@ -23,7 +23,7 @@ fn main() {
     println!("This is your result {result}")
 }
 
-fn get_number_from_user() -> u32{
+fn get_number_from_user() -> u32 {
     let mut number = String::from("");
 
     io::stdin()
@@ -37,22 +37,28 @@ fn get_number_from_user() -> u32{
     number
 }
 
-fn add(n: u32, m:u32) -> u32 {
+fn add(n: u32, m: u32) -> u32 {
     n + m
 }
 
-fn substract(n: u32, m:u32) -> u32 {
+fn substract(n: u32, m: u32) -> u32 {
     // Todo: check if n > m
-    if n < m { 0 }
-    else { n - m }
+    if n < m {
+        0
+    } else {
+        n - m
+    }
 }
 
-fn multiply(n: u32, m:u32) -> u32 {
+fn multiply(n: u32, m: u32) -> u32 {
     n * m
 }
 
-fn divide(n: u32, m:u32) -> u32{
+fn divide(n: u32, m: u32) -> u32 {
     // Todo: check if m != 0
-    if m <= 0 { 0 }
-    else { n / m }
+    if m <= 0 {
+        0
+    } else {
+        n / m
+    }
 }
