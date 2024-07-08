@@ -10,90 +10,90 @@ https://crates.io/
 https://www.youtube.com/watch?v=2CLHXQTR3d4&t=5494s
 
 ## Hello, Cargo!
-Cargo is Rusts's build system and package manager. 
-Cargo handles a lot of tasks for you, suchs as building your code, downloading the libraries your code depends on, and building those libraries. **dependencies**. 
+Cargo is Rusts's build system and package manager.
+Cargo handles a lot of tasks for you, suchs as building your code, downloading the libraries your code depends on, and building those libraries. **dependencies**.
 
 ## Building and Running a Cargo Project
 
 `cargo build` this command creates an executable file in `target/debug/hello_cargo` rather than in your current directory. Because the default build is a debug build, Cargo puths the binary in a directory named `debug`. You can run the executable with this command: `./hello-cargo`
 
-We can also use `cargo run` to compile the code and then run the resultant executable all in one command: 
+We can also use `cargo run` to compile the code and then run the resultant executable all in one command:
 
 
-Cargo also provides a command called `cargo check`. This command quickly checks your code to make sure it compiles but doesn't produce an executable. 
+Cargo also provides a command called `cargo check`. This command quickly checks your code to make sure it compiles but doesn't produce an executable.
 
-`cargo check` is much faster than `cargo build` because it skips he step of producing an executable. If you're continually checking your work while writing the code, using `cargo check` will speed up the process of letting you know if your project is still compiling. 
+`cargo check` is much faster than `cargo build` because it skips he step of producing an executable. If you're continually checking your work while writing the code, using `cargo check` will speed up the process of letting you know if your project is still compiling.
 - `cargo new`. Create a project.
 - `cargo build`. Build project.
 - `cargo run`. Build and Run project.
-- `cargo check`. Build without producing a binary. 
+- `cargo check`. Build without producing a binary.
 - `cargo build --release`. Compile project with optimizations. Create a executable `target/release`
 
-When we include an external dependency. Cargo fetches the latest version of everything that dependency needs from the *registry*, which is a copy of data from **Crates.io**. 
+When we include an external dependency. Cargo fetches the latest version of everything that dependency needs from the *registry*, which is a copy of data from **Crates.io**.
 
-**Crates.io** is where people in the Rust ecostystem post their open source Rust projects for others to use. 
+**Crates.io** is where people in the Rust ecostystem post their open source Rust projects for others to use.
 
 
-By default Rust has a set of items defined in the standard library that it brings into the scope of every program. This set is called the *prelude*. 
+By default Rust has a set of items defined in the standard library that it brings into the scope of every program. This set is called the *prelude*.
 
-If a type you want to use isn't in the prelude, you have to bring that type into scope explicitly with a `use` statement. Using `std::io` library provides the ability to accept user input. 
+If a type you want to use isn't in the prelude, you have to bring that type into scope explicitly with a `use` statement. Using `std::io` library provides the ability to accept user input.
 
-`println!` is a macro that prints a string to the screen. 
+`println!` is a macro that prints a string to the screen.
 
-We use `let` statement to create the variable. `let apples = 5`. 
+We use `let` statement to create the variable. `let apples = 5`.
 
-Rust variables are immutable by default, meaning once we give the variable a value, the value won't change. 
-To make a variable mutable, we add `mut` before name: `let mut bannanas = 5`. 
+Rust variables are immutable by default, meaning once we give the variable a value, the value won't change.
+To make a variable mutable, we add `mut` before name: `let mut bannanas = 5`.
 
-`String::new` returns a new instance of a String (type provided by the standard library) is growable. 
+`String::new` returns a new instance of a String (type provided by the standard library) is growable.
 
-The `::` syntanx indicates that `new` is an associated function of the `String` type. 
+The `::` syntanx indicates that `new` is an associated function of the `String` type.
 
-An *associated function* is a function that's implemented on a type, in this case `String`. 
+An *associated function* is a function that's implemented on a type, in this case `String`.
 
-This `new` function creates a new, empty string. `new` it's a common name for a function that makes a new value of some kind. 
+This `new` function creates a new, empty string. `new` it's a common name for a function that makes a new value of some kind.
 
-`let mut guess = String::new();` created a  mutable variable that is currently bound to new, empty instance of aString. 
+`let mut guess = String::new();` created a  mutable variable that is currently bound to new, empty instance of aString.
 
-`.read_line(&mut guess)` calls the read_line method. We are passing `&mut guess` as the argument to read_line to tell it what string to store the user input in. The full job of read_line is to take whatever the user types into standard input and append that into a string (without ovewriting its contents), so we therefore pass that string as an argument. The **argument needs to be mutable so the method can change the string's content**. 
+`.read_line(&mut guess)` calls the read_line method. We are passing `&mut guess` as the argument to read_line to tell it what string to store the user input in. The full job of read_line is to take whatever the user types into standard input and append that into a string (without ovewriting its contents), so we therefore pass that string as an argument. The **argument needs to be mutable so the method can change the string's content**.
 
-The `&` indicates that this argument is a *reference*, which gives you a way to let multiple parts of your code access one piece of data without needing to copy that data into memory multiple times. References ara immutable by default. Hence you need to write `&mut guess` to make it mutable. 
+The `&` indicates that this argument is a *reference*, which gives you a way to let multiple parts of your code access one piece of data without needing to copy that data into memory multiple times. References ara immutable by default. Hence you need to write `&mut guess` to make it mutable.
 
 
 ### Ensuring Reproducible Build with the Cargo.lock File
 
-Cargo has a mechanism that ensures you can rebuild the same artifact every time you or anyone else builds your code. 
+Cargo has a mechanism that ensures you can rebuild the same artifact every time you or anyone else builds your code.
 
 When you build a project for the first time, Cargo figures out the versions of the dependencies and then writes them to the *Cargo.lock* file.
 
-This lets you have reproducible build atomatically. In other words, your project will remain at specific version until you explicitly upgrade. 
+This lets you have reproducible build atomatically. In other words, your project will remain at specific version until you explicitly upgrade.
 
 ## Upgrade a Crate to Get a New Version
 
-`update` will ignore the *Cargo.lock* file and figure out all the latest versions that fit your specifications in Cargo.toml. Cargo will only look for versions greater than 0.8.5 and less than 0.9.0. 
+`update` will ignore the *Cargo.lock* file and figure out all the latest versions that fit your specifications in Cargo.toml. Cargo will only look for versions greater than 0.8.5 and less than 0.9.0.
 
 To use `rand` version 0.9.0 you'd have to update the Cargo.toml
 
 
 ## Variables and Mutability
 
-Variables are immutable. 
+Variables are immutable.
 
 ## Data Types
 
-Every value in Rust is of a certain *data type*, which tells Rust what kind of data is beign specified so 
-it knows how to work with data. Type subset: scalar and compound. 
-Rust is **statically typed language**: it must know the types of all variables at compile time. 
-The compiler can  usually infer what type we want to use based on the value and how we use it. 
-In cases when many types are possible, such as when we converted a `String` to a numeric type using `parse` in 
-the "Comparing the Guess to the Secret number" section. 
+Every value in Rust is of a certain *data type*, which tells Rust what kind of data is beign specified so
+it knows how to work with data. Type subset: scalar and compound.
+Rust is **statically typed language**: it must know the types of all variables at compile time.
+The compiler can  usually infer what type we want to use based on the value and how we use it.
+In cases when many types are possible, such as when we converted a `String` to a numeric type using `parse` in
+the "Comparing the Guess to the Secret number" section.
 
 ```
 let guess: u32 = "42".parse().expect("Not a number!");
 ```
 
 If we don'tn add the `: u32` type annotation shown in the preceding code, Rust will display the following error
-which means the compiler needs more information from us to know which type we want to use. 
+which means the compiler needs more information from us to know which type we want to use.
 
 `type must be known at this point`
 `help: consider givin 'guess' an explicit type`
@@ -101,48 +101,48 @@ which means the compiler needs more information from us to know which type we wa
 ## Scalar Types
 
 A *scalar type* represents a single value. Rust has four primary scalar types: integers, floating-point, number,
-booleans and characters. You may recognize these from other programing langauges. 
+booleans and characters. You may recognize these from other programing langauges.
 
 ### Integer Types
 
-An integer is a number without a fractional component. 
+An integer is a number without a fractional component.
 
 ```
 length      signed      unsigned
 8-bit       i8          u8
-16-bit      i16         u16 
-32-bit      i32         u32 
-64-bit      i64         u64 
-128-bit     i128        u128 
+16-bit      i16         u16
+32-bit      i32         u32
+64-bit      i64         u64
+128-bit     i128        u128
 arc         isize       usize
 ```
 
-Each variant can be either signed or unsigned and has an explicit size. 
+Each variant can be either signed or unsigned and has an explicit size.
 
-Integer types default to `i32`. 
+Integer types default to `i32`.
 
 
 ### Integer Overflow
-Let's say you have a variable of type `u8` that can hold values between 0 and 255. If you try to change the 
-variable to a value outside that range, such as 256, *integer overflow* will occur. 
-Rust includes checks for integer overflow that cause your program to panic at runtime if this behaviour occurs. 
-Rust uses the term *panicking* when a program exits with an error. 
+Let's say you have a variable of type `u8` that can hold values between 0 and 255. If you try to change the
+variable to a value outside that range, such as 256, *integer overflow* will occur.
+Rust includes checks for integer overflow that cause your program to panic at runtime if this behaviour occurs.
+Rust uses the term *panicking* when a program exits with an error.
 
-When you're compiling in release mode with the `--release` flag, r doest not include checks for integer 
+When you're compiling in release mode with the `--release` flag, r doest not include checks for integer
 overflow that causes panics. Instead, if overflow occurs, Rust performs two's complement wrapping. In short
 values greater than the maximum value the type can hold "wrap around" to the minimum of the values the type
 can hold: In case of `u8`, the value 256 becomes 0, the value 257 becomes 1, and so on. The program won't panic
-but the variable will have a value that probably isn't what you were expecting it to have. 
+but the variable will have a value that probably isn't what you were expecting it to have.
 
-Relying on integer overflow's wrapping behaviour is considered an error. 
+Relying on integer overflow's wrapping behaviour is considered an error.
 
-To explicitly handle the possibility of overflow, you can use these families of methods provided by the 
-standard library for primitive numeric types: 
+To explicitly handle the possibility of overflow, you can use these families of methods provided by the
+standard library for primitive numeric types:
 
 -   Wrap in all modes with the `wrapping_*` methods, suchs as `wrapping_add`.
 -   Return the `None` value if there is overflow with the `checked_*` methods.
 -   Return the value and a boolean indicating whether there was overflow with the *overflowing_** methods.
--   Saturate at the value's minimum or maximum values with the `saturating_*` methods. 
+-   Saturate at the value's minimum or maximum values with the `saturating_*` methods.
 
 ## Compound Types
 
@@ -151,7 +151,7 @@ Can group multiple values into one type. Rust has two primitive compound types: 
 ### The Tuple Type
 
 A tuple is a general way of grouping together a number of values with a variety of types into one compound type.
-Touples have a fixed length: once declared, they cannot grow or shrink in size. 
+Touples have a fixed length: once declared, they cannot grow or shrink in size.
 
 ```
 fn main(){
@@ -159,9 +159,9 @@ fn main(){
 }
 ```
 
-The variable `tup` binds to the entire tuple because a tuple is considered a single compound element. 
+The variable `tup` binds to the entire tuple because a tuple is considered a single compound element.
 
-We can use pattern matching to destructure a tuple value: 
+We can use pattern matching to destructure a tuple value:
 
 ```
 fn main() {
@@ -180,24 +180,24 @@ fn main() {
     let x: (i32, f64, u8) = (500, 6.4, 1);
     let five_hundred  = x.0;
     let six_point_four = x.1;
-    let one = x.2; 
+    let one = x.2;
 }
 ```
 
 The tuple without any values has a special name, **unit**. This value and its corresponding type are both
-written `()` and represents an empty value or an empty return type. 
+written `()` and represents an empty value or an empty return type.
 
 ### The array type
 
-Arrays are useful when you want your data allocated on the stack rather than the heap or when you want to 
-ensure you always have a fixed number of elements. 
-A *vector* is allowed to grow or shrink in size. 
-*Arrays* are more useful when you know the number of elements will not need to change. 
+Arrays are useful when you want your data allocated on the stack rather than the heap or when you want to
+ensure you always have a fixed number of elements.
+A *vector* is allowed to grow or shrink in size.
+*Arrays* are more useful when you know the number of elements will not need to change.
 
-Array type using square brackets with the type of each element, a semicolon and then the number of elements. 
+Array type using square brackets with the type of each element, a semicolon and then the number of elements.
 
-You can also initialize an array to contain the same value for each element by specifying the initial value. 
-Followed by a semicolon, and then the length of the array in square brackets, as shown here. 
+You can also initialize an array to contain the same value for each element by specifying the initial value.
+Followed by a semicolon, and then the length of the array in square brackets, as shown here.
 ```
 fn main(){
     let a = [1, 2, 3, 4, 5];
@@ -216,85 +216,85 @@ fn main(){
 ## Understanding Ownership
 
 Ownership is r most unique feature and has deep implications for the rest of the
-language. It enables r to make *memory safety* guarantees without needing a garbage 
-collector, so it's important to understand how ownership works. 
+language. It enables r to make *memory safety* guarantees without needing a garbage
+collector, so it's important to understand how ownership works.
 
-*Ownership* is a set of rules that govern how a r manages memory. In r memory is 
+*Ownership* is a set of rules that govern how a r manages memory. In r memory is
 managed through a system of ownership with a set of rules that the compiler checks.
 If any of the rules are violated, the program won't compile. None of the features of
-ownership will slow down your program while it's running. 
+ownership will slow down your program while it's running.
 
-When you understand ownership, you'll have a solid foundation for understanding the 
-features that make r unique. 
+When you understand ownership, you'll have a solid foundation for understanding the
+features that make r unique.
 
 **The Stack and the Heap**
 
 Many programming languages don't require you to think about the stack and the heap
-very often. But in a systems programming language like r, whether a value is on the 
-stack or the heap affects how the language behaves and why you have to make certain 
-decisions. 
+very often. But in a systems programming language like r, whether a value is on the
+stack or the heap affects how the language behaves and why you have to make certain
+decisions.
 
-Both the stack and the heap are parts of memory available to your code to use at 
-runtime, but they are structured in a different ways. 
+Both the stack and the heap are parts of memory available to your code to use at
+runtime, but they are structured in a different ways.
 
 The **stack** stores values in the order it gets them and removes the values in the opposite
-order. This is refered to as *last in, first out*. Adding data is called *pushing onto 
+order. This is refered to as *last in, first out*. Adding data is called *pushing onto
 the stack*, and removing data is called *popping off the stack*. All the data stored
-on the stack must have a known, **fixed size**. 
-Data with unknown size at compile time or a size that might change must be stored on 
-the heap instead. 
+on the stack must have a known, **fixed size**.
+Data with unknown size at compile time or a size that might change must be stored on
+the heap instead.
 
 
-The **heap** is less organized: when you put data on the heap, you request a certain 
-amount of space. The memory allocator finds an empty spot in the heap that is big enough, 
-marks it as being use, and returns a *pointer*, which is the address of that location. 
+The **heap** is less organized: when you put data on the heap, you request a certain
+amount of space. The memory allocator finds an empty spot in the heap that is big enough,
+marks it as being use, and returns a *pointer*, which is the address of that location.
 
-This process is called *allocating on the heap* == *allocating*. 
+This process is called *allocating on the heap* == *allocating*.
 
-Because the pointer to the heap is a known, fixed size, you can store the pointer on 
-the stack, but when you want the actual data, you must follow the pointer. 
+Because the pointer to the heap is a known, fixed size, you can store the pointer on
+the stack, but when you want the actual data, you must follow the pointer.
 
 
 ------------
 
 Pushing to the stack is faster than allocating on the heap because the allocator never
 has to search for a place to store new data. That alocation is always at the top of the
-stack. 
+stack.
 
-Allocating space on the heap requires more work because the allocator must first find a 
-big enough space to hold the data and the perform bookeeping to prepare for the next 
-allocation. 
+Allocating space on the heap requires more work because the allocator must first find a
+big enough space to hold the data and the perform bookeeping to prepare for the next
+allocation.
 
 Accessing data in the heap is slower than accessing data on the stack because you have
-to follow a pointer to get there. Also processors are faster if they jump around less 
-in memory. 
+to follow a pointer to get there. Also processors are faster if they jump around less
+in memory.
 
 A processor can do its job better if it works on data that's close to other data (stack)
-rather than farther away (heap). 
+rather than farther away (heap).
 
 When your code calls a function, the values passed into the function (including pointers
-to data on the heap) and the function's local variables get pushed onto the stack. 
-When the function is over, those values get popped off the stack. 
+to data on the heap) and the function's local variables get pushed onto the stack.
+When the function is over, those values get popped off the stack.
 
 # Ownership Rules
 
 -   Each value in Rust has a **owner**.
 
--   There can only be one owner at a time. 
+-   There can only be one owner at a time.
 
--   When the owner goes out of scope, the value will be dropped. 
+-   When the owner goes out of scope, the value will be dropped.
 
 **Variable Scope**.
 
-A scope is the range within a program fro which an item is valid. 
+A scope is the range within a program fro which an item is valid.
 
 The types covered previously are of known size, can be stored on the stack and popped
-off the stack when their scope is over, and can be quickly and trivially copied to make 
-a new, independent instance if another part of code needs to use the same value in a 
-different scope. 
+off the stack when their scope is over, and can be quickly and trivially copied to make
+a new, independent instance if another part of code needs to use the same value in a
+different scope.
 
-But we want to look at data that is stored on the heap and explore how r knows when to 
-clean up the data, and the `String` type is a great example. 
+But we want to look at data that is stored on the heap and explore how r knows when to
+clean up the data, and the `String` type is a great example.
 
 Can create a `String` from a string literal using the `from` function
 
@@ -303,9 +303,9 @@ let s = String::from("hello");
 ```
 
 The double colon `::` operator allows us to namespace this particular `from` function
-under the `String` type rather than using some sort of name like `string_from`. 
+under the `String` type rather than using some sort of name like `string_from`.
 
-This kind of String can be mutated: 
+This kind of String can be mutated:
 
 ```
 let mut s = String::from("hello");
@@ -318,79 +318,79 @@ print({s}); // 'hello, world'
 
 ## Memory and Allocation
 
-In case of string literal, we know the contents at compile time, so the text is 
+In case of string literal, we know the contents at compile time, so the text is
 hardcoded directly into the final executable. This is why strings literals are fast
-and efficient. But these properties only come from the strings literal's immutability. 
-Unfortunately, we can't put a blob of memory into the binary for each piece of text 
-whose size is unknown at compile time and whose size might change while running the 
-program. 
+and efficient. But these properties only come from the strings literal's immutability.
+Unfortunately, we can't put a blob of memory into the binary for each piece of text
+whose size is unknown at compile time and whose size might change while running the
+program.
 
-With the `String` type, in order to support a mutable, growable piece of text, we 
+With the `String` type, in order to support a mutable, growable piece of text, we
 need to allocate an amount of memory on the heap, unknown at compile time, to hold the
-contents. 
+contents.
 
 -   The memory must be requested from the memory allocator at runtime.
 -   We need a way of returning this memory to the allocator when we're done with our `String`
 
-This first part is done by us: when we call `String::from`, its implementation requests 
-the memory it needs. This is pretty much universal in programming languages. 
+This first part is done by us: when we call `String::from`, its implementation requests
+the memory it needs. This is pretty much universal in programming languages.
 
-However, the second part is different. In languages with a garbage collector, the GC 
+However, the second part is different. In languages with a garbage collector, the GC
 keeps track of and cleans up memeory that isn't being used anymore, and we don't need
-to think about it. 
+to think about it.
 
-R takes a different path: the memory is automatically returned once the variable that 
-owns it goes out of scope. 
+R takes a different path: the memory is automatically returned once the variable that
+owns it goes out of scope.
 
 ```
 {
     let s = String::from("hello");      // s is valid from this point forward
-                                        
-                                        
+
+
 }                                       // this scope is now over
                                         // and s is no longer valid
 ```
 
-The is a natural point at which we can return the memory our `String` needs to the 
+The is a natural point at which we can return the memory our `String` needs to the
 allocator: when `s` goes out of scope. When a variable goes out of scope, r calls
 a special function for us: `drop`. It's where the author of `String` can put the
 code to return the memory. R calls `drop` automatically at the closing curly bracket.
 
-Situations when we want to have multiple variables use the data we've allocated on the 
-heap. 
+Situations when we want to have multiple variables use the data we've allocated on the
+heap.
 
-## Variables and Data Interacting with Move. 
+## Variables and Data Interacting with Move.
 
 ```
 let x = 5;
 let y = x;
 
 // Integers are simple values with known, fixed size. And these two 5 values are pushed
-// onto the STACK. 
+// onto the STACK.
 ```
 
 ```
 let s1 = String::from("hello");
 let s2 = s1;
 
-// String is made up of three parts: 
+// String is made up of three parts:
 // 1. A pointer to the memory that holds the contents of the string.
-// 2. A lenght. 
-// 3. A capacity. 
+// 2. A lenght.
+// 3. A capacity.
 
-// This group of data is stored on the STACK. 
-// The content of the string is stored on the HEAP. 
+// This group of data is stored on the STACK.
+// The content of the string is stored on the HEAP.
 ```
 
-The length is how much memory, in bytes, the contents of the `string` are currently 
+The length is how much memory, in bytes, the contents of the `string` are currently
 using. The capacity is the total amount of memory, in bytes, that the `string` has
-received from the allocator. 
-The difference between length and capacity matters, but not in this context, so for 
-now, it's fine to ignore the capacity. 
+received from the allocator.
+The difference between length and capacity matters, but not in this context, so for
+now, it's fine to ignore the capacity.
 
 When we assign `s1` to `s2`, the data is copied, meaning we copy the pointer, the lenght
-and the capacity that are on the stack. We do not copy the data on the heap that the 
-pointer refers to. 
+and the capacity that are on the stack. We do not copy the data on the heap that the
+pointer refers to.
 
 ```
 let s1 = String::from("hello");
@@ -400,26 +400,26 @@ println!("{s1}, world!");
 ```
 
 R after the line `let s2 = s1;`, r considers `s1` as no longer valid. R doesn't need to
-free anything when `s1` goes out of scope. 
+free anything when `s1` goes out of scope.
 
-R prevents you from usign the invalidated reference. 
+R prevents you from usign the invalidated reference.
 
 If you've heard the terms *shallow* and *deep copy* while working with other languages,
-the concept of copying the pointer, length, and capacity without copying the data 
-probably sounds like making a shallow copy. But because R also invalidates the first 
+the concept of copying the pointer, length, and capacity without copying the data
+probably sounds like making a shallow copy. But because R also invalidates the first
 variable, instead of being called a shallow copy, it's known as *move*. In this example
-we would say that `s1` *was moved* into `s2`. 
+we would say that `s1` *was moved* into `s2`.
 
 With only `s2` valid, when it goes out of scope it alone will free the memory, and we're
-done. 
+done.
 
 In addition R will never automatically create *deep* copies of your data. Therefore any
-*automatic* copying can be assumed to be inexpensive in terms of runtime performance. 
+*automatic* copying can be assumed to be inexpensive in terms of runtime performance.
 
 ## Variables and Data Interacting with Clone
 
-If we do want to deeply copy the heap of the `String`, not just the stack data, we can 
-use a common method called `clone`. 
+If we do want to deeply copy the heap of the `String`, not just the stack data, we can
+use a common method called `clone`.
 
 ```
 let s1 = String::from("hello");
@@ -431,14 +431,14 @@ println!("s1 = {s1}, s2 = {s2}");
 This works just fine and explicitly produces the behaviour where the heap data *does*
 *get copied*.
 
-When you see a call to `clone`, you know that some arbitrary code is being executed 
-and that code may be expensive. It's a visual indicator that something different is 
-going on. 
+When you see a call to `clone`, you know that some arbitrary code is being executed
+and that code may be expensive. It's a visual indicator that something different is
+going on.
 
 ## Stack-Only Data: Copy
 
 There's another wrinkle we haven't talked about yet. This code using integers - part of
-which was shown in Listing. 
+which was shown in Listing.
 
 ```
 let x = 5;
@@ -450,28 +450,28 @@ println!("x = {x}, y = {y}");
 We don't have to call to `clone`, but `x` is still valid and wasn't moved into `y`.
 
 The reason is that types such as integers that have a known size at compile time are
-stored entirely on the stack, so copies of the actual values are quick to make. 
+stored entirely on the stack, so copies of the actual values are quick to make.
 
-That means there's no reason we would want to prevent `x` from being valid after we 
+That means there's no reason we would want to prevent `x` from being valid after we
 create the variable `y`. In other words, there's no difference between deep and shallow
 copying here, so calling `clone` wouldn't do anything different from the usual shallow
-copying, and we can leave it out. 
+copying, and we can leave it out.
 
-R has a special annotation called the `copy` trait that we can place on types that are 
-stored on the stacks, as integers are. 
+R has a special annotation called the `copy` trait that we can place on types that are
+stored on the stacks, as integers are.
 
-If a type implements the `copy` trait, variables that use it do not move, but rather are 
-trivially copied, making them still valid after assignment to another variable. 
+If a type implements the `copy` trait, variables that use it do not move, but rather are
+trivially copied, making them still valid after assignment to another variable.
 
 R won't let us annotate a type with `Copy` if the type, has implemented the `Drop` trait.
 If the type needs something special happen when the value goes out of scope and we add
-the `copy` annotation to that type, we'll get a compile-time error. 
+the `copy` annotation to that type, we'll get a compile-time error.
 
 
 So, what types implements the `copy` trait? You can check the documentation for the given
 type to be sure, but as a general ruel, any group of simple scalar values can implement
 `Copy`, and nothing that requires allocation or is some form of resource can implement
-`Copy`. 
+`Copy`.
 
 Here are some types that implement `Copy`:
 
@@ -479,14 +479,14 @@ Here are some types that implement `Copy`:
 -   The Boolean type, `bool`, with values `true` and `false`.
 -   All the floating-point types, such as `f64`.
 -   The character type `char`.
--   Tuples, if they only contain types that also implement `copy`. (`i32`, `i32`) 
-implements `Copy`, but (`i32`, `String`) does not. 
+-   Tuples, if they only contain types that also implement `copy`. (`i32`, `i32`)
+implements `Copy`, but (`i32`, `String`) does not.
 
 ## Ownership and Functions
 
-The mechanics of passing a value to a function are similiar to those when assigning a 
-value to a variable. Passing a variable to a function will move or copy, just as 
-assignment does. 
+The mechanics of passing a value to a function are similiar to those when assigning a
+value to a variable. Passing a variable to a function will move or copy, just as
+assignment does.
 
 ```
 fn main(){
@@ -510,7 +510,7 @@ fn makes_copy(some_integer: i32){
 
 ## Return Values and Scope
 
-Returning values can also transfer ownership. 
+Returning values can also transfer ownership.
 
 ```
 fn main() {
@@ -535,19 +535,19 @@ fn takes_and_gives_back(a_string: String) -> String {
 }
 ```
 
-The ownership of a variable follows the same pattern every time: assigning a value to 
-another variable moves it. When a variable that includes data on the heap goes out of 
-scope, the value will be cleaned up by `drop` unless ownership of the data has been 
-moved to another variable. 
+The ownership of a variable follows the same pattern every time: assigning a value to
+another variable moves it. When a variable that includes data on the heap goes out of
+scope, the value will be cleaned up by `drop` unless ownership of the data has been
+moved to another variable.
 
 
-While this works, taking ownership and then returning ownership with every function is 
-bit tedious. What if we want to let a function use a value but not take ownership? 
-It's quite annoying that anything we pass in also needs to be passed back if we want 
-to use it again, in addition to any data resulting from the body of the function that 
-we might want to return as well. 
+While this works, taking ownership and then returning ownership with every function is
+bit tedious. What if we want to let a function use a value but not take ownership?
+It's quite annoying that anything we pass in also needs to be passed back if we want
+to use it again, in addition to any data resulting from the body of the function that
+we might want to return as well.
 
-R does let us return multiple values using a tuple. 
+R does let us return multiple values using a tuple.
 
 ```
 fn main(){
@@ -566,13 +566,26 @@ fn calculate_length(s: String) -> (String, usize) {
 
 ```
 
-But this is too much ceremony and a lot of work for a concept that should be common. 
+But this is too much ceremony and a lot of work for a concept that should be common.
 
 Luckily for us, R has a feature for using a value without transferring ownership, called
-**references**. 
+**references**.
 
 ## References and Borrowing
 
 https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html
 
-The issue with the tuple 
+The issue with the tuple code
+
+```
+fn main(){
+  let s1 = String::from ("hello");
+  let len = calculate_length(&s1);
+
+  println!("The length of {s1} is {len}.");
+}
+
+fn calculate_length(s: &String) -> usize{
+  s.leng()
+}
+```
