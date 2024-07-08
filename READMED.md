@@ -740,3 +740,6 @@ this reference would be pointing to an invalid `String`. R won't let us do this.
 **The Rules of References**
 -   At any given time, you can have either one mutable reference or any number of immutable references.
 -   References must always be valid.
+
+-   At any given time, you can have either one mutable reference or any number of immutable references.
+-   References must always be valid.
