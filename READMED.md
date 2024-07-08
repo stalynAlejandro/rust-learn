@@ -630,3 +630,84 @@ When functions have references as parameters instead of the actual values, we wo
 Just as variables are immutable by default, so are references. We're not allowed to modify something we have reference to.
 
 ## Mutable Refernces
+
+We can fix the code to allow us to modify a borrowed value with just a few small tweaks that use, instead a **mutable reference**.
+
+```
+fn main(){
+    let mus s = String::from("hello");
+
+    change(&mut s);
+}
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", world");
+}
+```
+
+First we change `s` to be `mut`. Then can we create a mutable reference with `&mut s` where we call the `change` function, and update the function signature to accept a mutable reference with `some_string: &mut String`.
+
+Mutable references have one big restriction: If you have a mutable reference to a value, you can have no other references to that value. This code that attempts to create two mutable references to `s` will fail.
+
+```
+let mut s = String::from("hello");
+
+let r1 = &mut s;
+let r2 = &mut s;
+
+println!("{}, {}", r1, r2);
+
+// Error: First mutabe borrow occurs here
+//second mutable borrow occurs here
+```
+
+This error says that this code is invalid because we cannot borrow `s` as mutable more than once at a time.
+
+The restriction preventing multiple references to the same data at the same time,  allows for mutation but in a very controlled fashion.
+
+The benefit of having this restriction is that R can prevent data races at compile time.
+
+A **data race** is similar to a race condition and happens when these three behaviours occur:
+-   Two or more pointers access the same data at the same time.
+-   At least one of the pointers is being used to write to the data.
+-   There's no mechanism beign used to synchronize access to the data.
+
+As always, we can curly brackets to create a new scope, allowing for multiple references, just not *simultaneous* ones:
+
+```
+let mut s = String::from("hello");
+
+{
+    let r1 = &mut s;
+}   // r1 goes out of scope here, so we can make a new ref. with no problems
+
+let r2 = &mut s;
+```
+
+We also cannot have mutable references while we have an immutable one to the same value.
+
+```
+let mut s = String::from("hello"); // mutable `s`
+
+let r1 = &s;        // r1. (immutable) reference to value `s`
+let r2 = &s;        // r2. (immutable) reference to value `s`
+let r3 = &mut s;    // r3. Mutable reference to value `s`
+
+println!("{}, {} and {}" r1, r2, r3); // Error: r3 immutable reference ...
+```
+
+Multiple immutable references are allowed because no one who is just reading the data has the ability to affect anyone else's reading of the data.
+
+Note that a reference's scope starts from where it is introduced and continues through the last time that reference is used.
+
+```
+// This code compiles because the las usuage of the immutable references,
+// occurs before the Mutable Reference is introduced.
+
+let mut s = String::from("hello");      // Mutable s
+let r1 = &s;                            // Immutable ref to s
+let r2 = &s;                            // Immutable ref to s
+println!("{r1} and {r2}");              // Usage of ref r1 and r2
+let r3 = &mut s;                        // Create Mutable ref to s
+println!("{r3}");                       // Usage of ref 3
+```
