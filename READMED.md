@@ -743,3 +743,89 @@ this reference would be pointing to an invalid `String`. R won't let us do this.
 
 -   At any given time, you can have either one mutable reference or any number of immutable references.
 -   References must always be valid.
+
+### The Slice Type
+
+*Slices* let you reference a contiguous sequence of elements in a *collection* rather than the whole collection. A slice is a kind of reference, so it does not have ownership.
+
+Here's a small programming problem: write a function that takes a string of words separated by spaces and returns the first word it finds in that string. If the function doesn't find a space in the string, the whole string must be one word, so the entire string should be returned.
+
+Let's work through how we'd write the signature of this function without using slices, to understand the problem that slices will solve:
+
+```
+fn first_word(s: &String) -> ?
+```
+
+The `first_word` function has a `&String` as a parameter. We don't want ownership, so this is fine. But what should we return? We don't really have a way to talk about *part* of a string. However, we could return the index of the end of the word, indicated by a space.
+
+```
+fn first_word(s: &String) -> usize {
+    // Convert our string to an array of bytes using as_bytes method
+    let bytes = s.as_bytes();
+
+    // Create an iterator over the array of bytes using the iter method
+    // iter returns each element in a collection
+    // enumerate wraps the result of iter and returns each element as part
+    // of a tuple instead
+    // The first element returnd from enumerate is the index, and the second
+    // element is a reference to the element.
+    for(i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
+    }
+
+    s.len()
+}
+```
+
+We now have a way to find out the index of the end of the first word in the string but there's a problem. We're returning a `usize` on its own, but it's only a meaningful number in the context of the `&String`.
+
+In other words, because it's a separate value from the `String`, there's no guarantee that it will be valid in the future.
+
+```
+fn main(){
+    let mut s = String::from("hello world");
+    let word = first_word(&s); // word will get the value 5
+
+    s.clear(); // this empties the String, making it equal to ""
+
+    // word still has the value 5 here, but there's no more string that
+    // we could meaningfully use the value 5 with. word is now totally invalid.
+}
+```
+
+This program compiles without any errors and would also do so if we used `word` after calling `s.clear()`. Because `word` isn't connected to the state of `s` at all, `word` still contains the value `5`.
+
+We could use that value `5` with the variable `s` to try to extract the first word out, but this would be a bug because the contents of `s` have changed since we saved `5` in `word`.
+
+Having to worry about the index in `word` getting out of sync with the data in `s` is tedious and error phrone! Managing these indices is even more brittle if we write a `second_word` function. Its signature would have to look like this:
+
+```
+fn second_word(s: &String) -> (usize, usize) {}
+```
+
+Now we're tracking a string and an ending index, and we have even more values that were calculated from data in a particular state but aren't tied to that state at all. We have three unrelated variables floating around that need to be kept in sync.
+
+## String Slices
+
+A **string slice** is a reference to part of a `String`, and it looks like this:
+
+```
+let s = String::from("hello world");
+
+let hello = &s[0..5];
+let world = &s[6..11];
+```
+
+Rather than a reference to the entire `String`, `hello` is a reference to a portion of the `String`. specified in the extra `[0..5]` bit. We created slices using a range within brackets by specifying `[starting_index..ending_index]`, where `starting_index` is the first position in the slice and `ending_index` is one more than the last position in the slice.
+
+Internally, the slice data structure stores the starting position and the length of the slice, which corresponds to `ending_index` minus `starting_index`. So, in the case of `let world = &s[6..11]`;
+
+With Rust's `..` range syntax, if you want to start at index 0, you can drop the value before the two periods. In other words, these are equal.
+
+```
+let s = String::from("hello");
+let slice = &s[0..2];
+let slice = &s[..2];
+```
